@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <base target="_top">
+  <style>
+    body {
+      font-family: 'Open Sans', sans-serif;
+      padding: 20px;
+      max-width: 700px;
+      margin: auto;
+      background-color: #FEF8F8;
+      color: #000000;
+      font-size: 15px;
+    }
+    h2 {
+      font-family: 'Proxima Nova', sans-serif;
+      color: #00699C;
+    }
+    form {
+      display: flex;
+      flex-direction: column;
+    }
+    label {
+      margin-top: 12px;
+      font-weight: 600;
+    }
+    input, select, textarea, button {
+      padding: 10px;
+      margin-top: 4px;
+      font-size: 1em;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      width: 100%;
+      box-sizing: border-box;
+    }
+    select[multiple] {
+      height: auto;
+    }
+    button {
+      background-color: #FF7043;
+      color: #FFFFFF;
+      border: none;
+      margin-top: 20px;
+      cursor: pointer;
+      border-radius: 4px;
+      font-family: 'Proxima Nova', sans-serif;
+      transition: background-color 0.3s ease;
+    }
+    button:hover {
+      background-color: #e85c30;
+    }
+    img.logo {
+      max-width: 180px;
+      margin-bottom: 20px;
+    }
+    .confirmation {
+      text-align: center;
+      font-family: 'Proxima Nova', sans-serif;
+      font-size: 1.2em;
+      margin-top: 40px;
+      color: #00699C;
+    }
+    @media (max-width: 600px) {
+      body {
+        padding: 15px;
+      }
+      h2 {
+        font-size: 1.5em;
+      }
+    }
+  </style>
+</head>
+<body>
+  <img class="logo" src="https://drive.google.com/uc?export=view&id=1ZWSt0020VT3v392EyICGCmWpRad66P_a" alt="APRISE Learning Logo">
+  <h2>Book a Free Assessment</h2>
+  <form id="assessmentForm" novalidate>
+    <label>Parent First Name<input name="parentFirstName" required></label>
+    <label>Parent Last Name<input name="parentLastName" required></label>
+    <label>Parent Email<input type="email" name="parentEmail" required></label>
+    <label>Parent Phone<input name="parentPhone" pattern="\d{10}" placeholder="e.g. 3125551234" required></label>
+
+    <label>Student First Name<input name="studentFirstName" required></label>
+    <label>Student Last Name<input name="studentLastName" required></label>
+    <label>Current/Rising Grade or Math Level
+      <select name="studentGrade" required>
+        <option value="">Select grade</option>
+        <option>Kindergarten</option>
+        <option>Grade 1</option>
+        <option>Grade 2</option>
+        <option>Grade 3</option>
+        <option>Grade 4</option>
+        <option>Grade 5</option>
+        <option>Grade 6</option>
+        <option>Grade 7/8 Pre-Algebra</option>
+        <option>Algebra I</option>
+        <option>Algebra II</option>
+        <option>Geometry</option>
+        <option>Pre-Calculus</option>
+        <option>Calculus</option>
+      </select>
+    </label>
+
+    <label>Program(s) of Interest
+      <select name="programInterest" multiple required>
+        <option value="Academic Year Math">Math</option>
+        <option value="Coding (8 to 16 weeks)">Coding</option>
+        <option value="Science (8 to 16 weeks)">Science</option>
+        <option value="Financial Literacy (8 to 16 weeks)">Financial Literacy</option>
+        <option value="Data Science & Optimization (8 to 16 weeks)">Data Science & Optimization</option>
+        <option value="Individual Tutoring">Tutoring</option>
+        <option value="Crash Courses (8 to 16 weeks)">Crash Courses</option>
+        <option value="Summer Programs (4 to 8 weeks)">Summer Programs</option>
+      </select>
+    </label>
+
+    <label>Preferred Date<input type="date" name="preferredDate" id="preferredDate" required></label>
+    <label>Preferred Time<select name="preferredTime" id="preferredTime" required><option value="">Select a time</option></select></label>
+
+    <label>How did you hear about us?<input name="hearAboutUs"></label>
+
+    <label>Notes or questions for the teacher<textarea name="notes"></textarea></label>
+
+    <label><input type="checkbox" name="smsConsent"> I consent to receive text messages about this session</label>
+
+    <button type="submit">Submit</button>
+  </form>
+
+  <div class="confirmation" id="confirmation" style="display: none;">
+    <p>Thank you! Your free assessment has been scheduled. A confirmation email has been sent.</p>
+  </div>
+
+  <script>
+    const form = document.getElementById('assessmentForm');
+    const confirmation = document.getElementById('confirmation');
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      if (!form.checkValidity()) {
+        alert("Please fill out all required fields correctly.");
+        return;
+      }
+
+      const formData = new FormData(form);
+      const data = Object.fromEntries(formData.entries());
+      data.smsConsent = !!form.smsConsent.checked;
+      data.programInterest = formData.getAll("programInterest");
+
+      try {
+        const response = await fetch("https://script.google.com/macros/s/YOUR_DEPLOYMENT_ID/exec", {
+          method: "POST",
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(data)
+        });
+
+        if (response.ok) {
+          form.style.display = 'none';
+          confirmation.style.display = 'block';
+        } else {
+          alert("There was an error submitting the form. Please try again later.");
+        }
+      } catch (error) {
+        console.error("Submission error:", error);
+        alert("Network error. Please try again later.");
+      }
+    });
+
+    document.getElementById('preferredDate').addEventListener('change', async (e) => {
+      const date = e.target.value;
+      try {
+        const response = await fetch(`/exec?date=${date}`);
+        const times = await response.json();
+        const timeSelect = document.getElementById('preferredTime');
+        timeSelect.innerHTML = '<option value="">Select a time</option>' + times.map(t => `<option value="${t}">${t}</option>`).join('');
+      } catch (err) {
+        console.error("Error fetching available times:", err);
+        alert("Couldn't fetch available times. Please try again later.");
+      }
+    });
+  </script>
+</body>
+</html>
