@@ -65,6 +65,13 @@
     .checkbox-columns {
       display: flex;
       flex-direction: column;
+      gap: 8px;
+    }
+    .checkbox-columns label {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-weight: normal;
     }
   </style>
 </head>
@@ -101,14 +108,14 @@
 
     <label>Program(s) of Interest<span style="color:red">*</span>
       <select name="programInterest" multiple required>
-        <option value="Academic Year Math">Math</option>
-        <option value="Coding (8 to 16 weeks)">Coding</option>
-        <option value="Science (8 to 16 weeks)">Science</option>
-        <option value="Financial Literacy (8 to 16 weeks)">Financial Literacy</option>
-        <option value="Data Science & Optimization (8 to 16 weeks)">Data Science & Optimization</option>
-        <option value="Individual Tutoring">Tutoring</option>
-        <option value="Crash Courses (8 to 16 weeks)">Crash Courses</option>
-        <option value="Summer Programs (4 to 8 weeks)">Summer Programs</option>
+        <option>Academic Year Math</option>
+        <option>Coding (8 to 16 weeks)</option>
+        <option>Science (8 to 16 weeks)</option>
+        <option>Financial Literacy (8 to 16 weeks)</option>
+        <option>Data Science & Optimization (8 to 16 weeks)</option>
+        <option>Individual Tutoring</option>
+        <option>Crash Courses (8 to 16 weeks)</option>
+        <option>Summer Programs (4 to 8 weeks)</option>
       </select>
     </label>
 
@@ -117,12 +124,12 @@
 
     <label>How did you Hear About APRISE Learning? <span style="color:red">*</span>
       <div class="checkbox-columns">
-        <label><input type="checkbox" name="hearAboutUs" value="Friend"> Recommended by a Friend</label>
-        <label><input type="checkbox" name="hearAboutUs" value="Social Media"> Social Media (Facebook/Instagram/Youtube/LinkedIn)</label>
-        <label><input type="checkbox" name="hearAboutUs" value="Search Engine"> Search Engine (Google, Bing, or other)</label>
-        <label><input type="checkbox" name="hearAboutUs" value="Email from APRISE"> Email from Aprise Learning</label>
-        <label><input type="checkbox" name="hearAboutUs" value="Email from School"> Email from School</label>
-        <label><input type="checkbox" name="hearAboutUs" value="Other"> Other…</label>
+        <label><input type="checkbox" name="hearAboutUs" value="Friend">Recommended by a Friend</label>
+        <label><input type="checkbox" name="hearAboutUs" value="Social Media">Social Media (Facebook/Instagram/Youtube/LinkedIn)</label>
+        <label><input type="checkbox" name="hearAboutUs" value="Search Engine">Search Engine (Google, Bing, or other)</label>
+        <label><input type="checkbox" name="hearAboutUs" value="Email from APRISE">Email from Aprise Learning</label>
+        <label><input type="checkbox" name="hearAboutUs" value="Email from School">Email from School</label>
+        <label><input type="checkbox" name="hearAboutUs" value="Other">Other…</label>
       </div>
     </label>
 
