@@ -36,7 +36,7 @@
       box-sizing: border-box;
     }
     select[multiple] {
-      height: auto;
+      height: 150px;
     }
     button {
       background-color: #FF7043;
@@ -65,14 +65,17 @@
     .checkbox-columns {
       display: flex;
       flex-direction: column;
-      align-items: flex-start;
-      gap: 8px;
+      gap: 6px;
     }
     .checkbox-columns label {
       display: flex;
-      align-items: center;
-      gap: 8px;
+      gap: 10px;
       font-weight: normal;
+      align-items: flex-start;
+      text-align: left;
+    }
+    .checkbox-columns input[type="checkbox"] {
+      margin-top: 4px;
     }
   </style>
 </head>
@@ -109,6 +112,7 @@
 
     <label>Program(s) of Interest<span style="color:red">*</span>
       <select name="programInterest" multiple required>
+        <option value="">Select as many as apply</option>
         <option>Academic Year Math</option>
         <option>Coding (8 to 16 weeks)</option>
         <option>Science (8 to 16 weeks)</option>
@@ -135,7 +139,7 @@
 
     <label>Notes or questions for the teacher<textarea name="notes"></textarea></label>
 
-    <label><input type="checkbox" name="smsConsent" required> I consent to receive text messages about this session using the phone number provided.<span style="color:red">*</span></label>
+    <label><input type="checkbox" name="smsConsent" required> I consent to receive text messages about this session using the phone number provided.<span style="color:red">*</span>.</label>
 
     <button type="submit">Submit</button>
   </form>
