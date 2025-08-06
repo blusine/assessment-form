@@ -62,10 +62,10 @@
       margin-top: 40px;
       color: #00699C;
     }
-    input[type="checkbox"] {
-      float: left; /* Floats the checkbox to the left */
-      margin-right: 2px; /* Adds space */
-      style="overflow: hidden;"
+    #timeError {
+      color: red;
+      margin-top: 6px;
+      display: none;
     }
   </style>
 </head>
@@ -116,6 +116,7 @@
 
     <label>Preferred Date<span style="color:red">*</span><input type="date" name="preferredDate" id="preferredDate" required></label>
     <label>Preferred Time<span style="color:red">*</span><select name="preferredTime" id="preferredTime" required><option value="">Select a time</option></select></label>
+    <div id="timeError"></div>
 
     <label>How did you Hear About APRISE Learning?<span style="color:red">*</span></label>
     <label><input type="checkbox" name="hearAboutUs" value="Friend"> Recommended by a Friend</label>
@@ -127,7 +128,7 @@
 
     <label>Notes or questions for the teacher<textarea name="notes"></textarea></label>
 
-    <label>I consent to receive text messages about this session using the phone number provided.<span style="color:red">*</span><input type="checkbox" name="smsConsent" required></label>
+    <label><input type="checkbox" name="smsConsent" required> I consent to receive text messages about this session using the phone number provided.<span style="color:red">*</span></label>
 
     <button type="submit">Submit</button>
   </form>
@@ -139,6 +140,7 @@
   <script>
     const form = document.getElementById('assessmentForm');
     const confirmation = document.getElementById('confirmation');
+    const timeError = document.getElementById('timeError');
 
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
@@ -180,9 +182,11 @@
         const times = await response.json();
         const timeSelect = document.getElementById('preferredTime');
         timeSelect.innerHTML = '<option value="">Select a time</option>' + times.map(t => `<option value="${t}">${t}</option>`).join('');
+        timeError.style.display = 'none';
       } catch (err) {
         console.error("Error fetching available times:", err);
-        alert("Couldn't fetch available times. Please try again later.");
+        timeError.textContent = "No available times found for this date. Please select another.";
+        timeError.style.display = 'block';
       }
     });
   </script>
