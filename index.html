@@ -65,6 +65,7 @@
     .checkbox-columns {
       display: flex;
       flex-direction: column;
+      align-items: flex-start;
       gap: 8px;
     }
     .checkbox-columns label {
@@ -122,20 +123,19 @@
     <label>Preferred Date<span style="color:red">*</span><input type="date" name="preferredDate" id="preferredDate" required></label>
     <label>Preferred Time<span style="color:red">*</span><select name="preferredTime" id="preferredTime" required><option value="">Select a time</option></select></label>
 
-    <label>How did you Hear About APRISE Learning? <span style="color:red">*</span>
-      <div class="checkbox-columns">
-        <label><input type="checkbox" name="hearAboutUs" value="Friend">Recommended by a Friend</label>
-        <label><input type="checkbox" name="hearAboutUs" value="Social Media">Social Media (Facebook/Instagram/Youtube/LinkedIn)</label>
-        <label><input type="checkbox" name="hearAboutUs" value="Search Engine">Search Engine (Google, Bing, or other)</label>
-        <label><input type="checkbox" name="hearAboutUs" value="Email from APRISE">Email from Aprise Learning</label>
-        <label><input type="checkbox" name="hearAboutUs" value="Email from School">Email from School</label>
-        <label><input type="checkbox" name="hearAboutUs" value="Other">Other…</label>
-      </div>
-    </label>
+    <label>How did you Hear About APRISE Learning?<span style="color:red">*</span></label>
+    <div class="checkbox-columns">
+      <label><input type="checkbox" name="hearAboutUs" value="Friend">Recommended by a Friend</label>
+      <label><input type="checkbox" name="hearAboutUs" value="Social Media">Social Media (Facebook/Instagram/Youtube/LinkedIn)</label>
+      <label><input type="checkbox" name="hearAboutUs" value="Search Engine">Search Engine (Google, Bing, or other)</label>
+      <label><input type="checkbox" name="hearAboutUs" value="Email from APRISE">Email from Aprise Learning</label>
+      <label><input type="checkbox" name="hearAboutUs" value="Email from School">Email from School</label>
+      <label><input type="checkbox" name="hearAboutUs" value="Other">Other…</label>
+    </div>
 
     <label>Notes or questions for the teacher<textarea name="notes"></textarea></label>
 
-    <label><input type="checkbox" name="smsConsent" required> I consent to receive text messages about this session using the phone number provided</label>
+    <label><input type="checkbox" name="smsConsent" required> I consent to receive text messages about this session using the phone number provided.<span style="color:red">*</span></label>
 
     <button type="submit">Submit</button>
   </form>
