@@ -1,128 +1,137 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>APRISE Learning - Free Assessment</title>
 <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&family=Proxima+Nova:wght@600&display=swap" rel="stylesheet">
 
 <style>
-    body {
-        font-family: 'Open Sans', sans-serif;
-        background-color: #fdfdfd;
-        margin: 0;
-        padding: 10px;
-    }
+  body {
+    font-family: 'Open Sans', sans-serif;
+    background-color: #fdfdfd;
+    margin: 0;
+    padding: 10px;
+  }
+  .container {
+    max-width: 700px;
+    margin: 30px auto;
+    background: #ffffff;
+    padding: 25px 30px;
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+  }
+  h2.section-title {
+    font-family: 'Proxima Nova', sans-serif;
+    color: #004aad; /* APRISE primary */
+    font-size: 1.3rem;
+    margin-bottom: 15px;
+    border-bottom: 2px solid #fb5c71; /* APRISE secondary */
+    padding-bottom: 5px;
+  }
+  label {
+    display: block;
+    font-weight: 600;
+    margin-top: 15px;
+    margin-bottom: 6px;
+    color: #333;
+  }
+  input[type="text"], input[type="email"], input[type="tel"],
+  select, textarea, input[type="date"] {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 0.95rem;
+    margin-bottom: 10px;
+    box-sizing: border-box;
+  }
 
-    .container {
-        max-width: 700px;
-        margin: 30px auto;
-        background: #ffffff;
-        padding: 25px 30px;
-        border-radius: 8px;
-        box-shadow: 0 4px 15px rgba(0,0,0,0.08);
-    }
+  /* layout */
+  .row {
+    display: flex;
+    flex-wrap: wrap;   /* stack on small screens */
+    gap: 15px;         /* you asked for ~15px */
+  }
+  .row .half {
+    flex: 1;
+    min-width: 0;
+  }
 
-    h2.section-title {
-        font-family: 'Proxima Nova', sans-serif;
-        color: #004aad; /* APRISE primary */
-        font-size: 1.3rem;
-        margin-bottom: 15px;
-        border-bottom: 2px solid #fb5c71; /* APRISE secondary */
-        padding-bottom: 5px;
-    }
+  /* checkbox lists */
+  .checkbox-group { margin-top: 8px; }
+  .checkbox-group label {
+    font-weight: 400;
+    display: flex;
+    align-items: center;
+    margin-bottom: 6px;
+  }
+  .checkbox-group input { margin-right: 8px; }
 
-    label {
-        display: block;
-        font-weight: 600;
-        margin-top: 15px;
-        margin-bottom: 6px;
-        color: #333;
-    }
+  .secondary-label {
+    font-weight: normal;
+    font-size: 0.85rem;
+    color: #777;
+    margin-bottom: 5px;
+  }
 
-    input[type="text"],
-    input[type="email"],
-    input[type="tel"],
-    select,
-    textarea,
-    input[type="date"] {
-        width: 100%;
-        padding: 10px;
-        border: 1px solid #ccc;
-        border-radius: 5px;
-        font-size: 0.95rem;
-        margin-bottom: 10px;
-    }
+  /* time buttons */
+  .time-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 8px;
+  }
+  .time-button {
+    padding: 8px 12px;
+    border: 1px solid #004aad;
+    color: #004aad;
+    background: #fff;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 0.95rem;
+    transition: background-color .2s, color .2s, border-color .2s;
+  }
+  .time-button:hover { background: #004aad; color: #fff; }
+  .time-button.selected { background: #004aad; color: #fff; }
 
-    .row {
-        display: flex;
-        flex-wrap: wrap; /* in case the screen is narrow */
-        gap: 20px; /* space between inputs in the same row */
-}
+  .required { color: #fb5c71; } /* used in headings */
 
-    .row .half {
-        flex: 1; /* equal widths */
-        min-width: 0; /* prevent overflow in flexbox */
-    }
+  /* button */
+  button[type="submit"] {
+    background-color: #004aad;
+    color: #fff;
+    border: none;
+    padding: 12px 20px;
+    font-size: 1rem;
+    font-weight: 600;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 15px;
+    transition: background-color 0.3s ease;
+  }
+  button[type="submit"]:hover { background-color: #003580; }
 
-    .checkbox-group {
-        margin-top: 8px;
-    }
-
-    .checkbox-group label {
-        font-weight: 400;
-        display: flex;
-        align-items: center;
-        margin-bottom: 6px;
-    }
-
-    .checkbox-group input {
-        margin-right: 8px;
-    }
-
-    .secondary-label {
-        font-weight: normal;
-        font-size: 0.85rem;
-        color: #777;
-        margin-bottom: 5px;
-    }
-
-    button {
-        background-color: #004aad; /* APRISE primary */
-        color: #fff;
-        border: none;
-        padding: 12px 20px;
-        font-size: 1rem;
-        font-weight: 600;
-        border-radius: 5px;
-        cursor: pointer;
-        margin-top: 15px;
-        transition: background-color 0.3s ease;
-    }
-
-    button:hover {
-        background-color: #003580;
-    }
-
-    .required {
-        color: #fb5c71; /* APRISE secondary */
-    }
+  /* helpers */
+  .error { color: #d93025; font-size: 0.9rem; display: none; margin-top: 4px; }
+  .hint  { font-size: 0.85rem; color: #777; }
+  .success { color: #006400; font-size: 1rem; display: none; margin-top: 8px; }
 </style>
 </head>
 <body>
-
 <div class="container">
+  <form id="assessmentForm" novalidate>
     <!-- Parent/Guardian Information -->
     <h2 class="section-title">Parent/Guardian Information <span class="required">*</span></h2>
     <div class="row">
-        <div class="half">
-            <label for="parentFirstName">First Name</label>
-            <input type="text" id="parentFirstName" name="parentFirstName" required>
-        </div>
-        <div class="half">
-            <label for="parentLastName">Last Name</label>
-            <input type="text" id="parentLastName" name="parentLastName" required>
-        </div>
+      <div class="half">
+        <label for="parentFirstName">First Name</label>
+        <input type="text" id="parentFirstName" name="parentFirstName" required>
+      </div>
+      <div class="half">
+        <label for="parentLastName">Last Name</label>
+        <input type="text" id="parentLastName" name="parentLastName" required>
+      </div>
     </div>
 
     <label for="parentEmail">Email <span class="required">*</span></label>
@@ -136,66 +145,206 @@
     <!-- Student Information -->
     <h2 class="section-title">Student Information <span class="required">*</span></h2>
     <div class="row">
-        <div class="half">
-            <label for="studentFirstName">First Name</label>
-            <input type="text" id="studentFirstName" name="studentFirstName" required>
-        </div>
-        <div class="half">
-            <label for="studentLastName">Last Name</label>
-            <input type="text" id="studentLastName" name="studentLastName" required>
-        </div>
+      <div class="half">
+        <label for="studentFirstName">First Name</label>
+        <input type="text" id="studentFirstName" name="studentFirstName" required>
+      </div>
+      <div class="half">
+        <label for="studentLastName">Last Name</label>
+        <input type="text" id="studentLastName" name="studentLastName" required>
+      </div>
     </div>
 
-    <label for="currentGrade">Current/Rising Grade or Math Level</label>
-    <select id="currentGrade" name="currentGrade" required>
-        <option value="">Select an option</option>
-        <option>Kindergarten</option>
-        <option>Grade 1</option>
-        <option>Grade 2</option>
-        <option>Grade 3</option>
-        <option>Grade 4</option>
-        <option>Grade 5</option>
-        <option>Grade 6</option>
-        <option>Grade 6-8 Pre-Algebra</option>
-        <option>Algebra I</option>
-        <option>Algebra II</option>
-        <option>Geometry</option>        
-        <option>Precalculus</option>
-        <option>Calculus</option>
+    <label for="studentGrade">Current/Rising Grade or Math Level</label>
+    <select id="studentGrade" name="studentGrade" required>
+      <option value="">Select an option</option>
+      <option>Kindergarten</option>
+      <option>Grade 1</option>
+      <option>Grade 2</option>
+      <option>Grade 3</option>
+      <option>Grade 4</option>
+      <option>Grade 5</option>
+      <option>Grade 6</option>
+      <option>Grade 6-8 Pre-Algebra</option>
+      <option>Algebra I</option>
+      <option>Algebra II</option>
+      <option>Geometry</option>
+      <option>Precalculus</option>
+      <option>Calculus</option>
     </select>
 
-    <!-- Program Interest -->
+    <!-- Program(s) of Interest -->
     <h2 class="section-title">Program(s) of Interest</h2>
     <div class="secondary-label">Select all that apply</div>
-    <div class="checkbox-group">
-        <label><input type="checkbox" name="programInterest" value="Math"> Academic Year Math</label>
-        <label><input type="checkbox" name="programInterest" value="Coding"> Coding (8-16 weeks)</label>
-        <label><input type="checkbox" name="programInterest" value="Crash Courses"> Crash Courses (8-16 weeks)</label>
-        <label><input type="checkbox" name="programInterest" value="Data Science"> Data Science & Optimization (8-16 weeks)</label>
-        <label><input type="checkbox" name="programInterest" value="Financial Literacy"> Financial Literacy Courses (8-16 weeks)</label>
-        <label><input type="checkbox" name="programInterest" value="Individual Tutoring"> Individual Tutoring</label>
-        <label><input type="checkbox" name="programInterest" value="Science"> Science (8-16 weeks)</label>
-        <label><input type="checkbox" name="programInterest" value="Summer Programs"> Summer Programs (4-8 weeks)</label>
-        <label><input type="checkbox" name="programInterest" value="Other"> Other</label>
+    <div class="checkbox-group" id="programsGroup">
+      <label><input type="checkbox" name="programInterest" value="Academic Year Math"> Academic Year Math</label>
+      <label><input type="checkbox" name="programInterest" value="Coding (8-16 weeks)"> Coding (8-16 weeks)</label>
+      <label><input type="checkbox" name="programInterest" value="Crash Courses (8-16 weeks)"> Crash Courses (8-16 weeks)</label>
+      <label><input type="checkbox" name="programInterest" value="Data Science & Optimization (8-16 weeks)"> Data Science & Optimization (8-16 weeks)</label>
+      <label><input type="checkbox" name="programInterest" value="Financial Literacy (8-16 weeks)"> Financial Literacy Courses (8-16 weeks)</label>
+      <label><input type="checkbox" name="programInterest" value="Individual Tutoring"> Individual Tutoring</label>
+      <label><input type="checkbox" name="programInterest" value="Science (8-16 weeks)"> Science (8-16 weeks)</label>
+      <label><input type="checkbox" name="programInterest" value="Summer Programs (4-8 weeks)"> Summer Programs (4-8 weeks)</label>
+      <label><input type="checkbox" name="programInterest" value="Other"> Other</label>
     </div>
+    <div class="error" id="programsError">Please select at least one program of interest.</div>
 
     <!-- How Did You Hear About Us -->
     <h2 class="section-title">How Did You Hear About Us? <span class="required">*</span></h2>
-    <div class="checkbox-group">
-        <label><input type="checkbox" name="referral" value="Friend or Current Student"> Recommended by a Friend</label>
-        <label><input type="checkbox" name="referral" value="Facebook, Instagram, YouTube"> Facebook, Instagram, YouTube, or LinkedIn</label>
-        <label><input type="checkbox" name="referral" value="Google or Bing Search"> Search Engine (Google, Bing, or other)</label>
-        <label><input type="checkbox" name="referral" value="Email from Aprise Learning"> Email from Aprise Learning</label>
-        <label><input type="checkbox" name="referral" value="School Ads or Email"> School Ads or Email</label>
-        <label><input type="checkbox" name="referral" value="Other"> Other</label>
+    <div class="checkbox-group" id="hearGroup">
+      <label><input type="checkbox" name="hearAboutUs" value="Recommended by a Friend"> Recommended by a Friend</label>
+      <label><input type="checkbox" name="hearAboutUs" value="Social Media"> Facebook, Instagram, YouTube, or LinkedIn</label>
+      <label><input type="checkbox" name="hearAboutUs" value="Search Engine"> Search Engine (Google, Bing, or other)</label>
+      <label><input type="checkbox" name="hearAboutUs" value="Email from APRISE"> Email from Aprise Learning</label>
+      <label><input type="checkbox" name="hearAboutUs" value="School Ads or Email"> School Ads or Email</label>
+      <label><input type="checkbox" name="hearAboutUs" value="Other"> Other</label>
     </div>
+    <div class="error" id="hearError">Please select at least one option.</div>
 
-    <!-- Date -->
-    <label for="date">Preferred Date <span class="required">*</span></label>
-    <input type="date" id="date" name="date" required>
+    <!-- Date & Time -->
+    <h2 class="section-title">Preferred Date & Time <span class="required">*</span></h2>
+    <label for="preferredDate">Preferred Date</label>
+    <input type="date" id="preferredDate" name="preferredDate" required>
 
-    <button type="submit">Register</button>
+    <label for="preferredTime">Preferred Time</label>
+    <div id="preferredTimeButtons" class="time-buttons"></div>
+    <input type="hidden" id="preferredTime" name="preferredTime" required>
+    <div class="error" id="timeError">Please select a time slot.</div>
+
+    <!-- Notes -->
+    <label for="notes">Notes or questions for the teacher</label>
+    <textarea id="notes" name="notes" rows="4" placeholder=""></textarea>
+
+    <!-- Submit -->
+    <div class="error" id="formError">Please fill out all required fields correctly.</div>
+    <div class="success" id="formSuccess">Thank you! Your free assessment has been scheduled. A confirmation email has been sent.</div>
+    <button type="submit">Submit</button>
+  </form>
 </div>
 
+<script>
+  const DEPLOY_URL = "https://script.google.com/macros/s/AKfycbw1JFckUEHppkQ43mYt9UKUAg4BAbClYfWqXyn9N4riSmDGcme20CReZxKvBWvW6dbJew/exec";
+
+  const form = document.getElementById('assessmentForm');
+  const programsGroup = document.getElementById('programsGroup');
+  const programsError = document.getElementById('programsError');
+  const hearGroup = document.getElementById('hearGroup');
+  const hearError = document.getElementById('hearError');
+  const preferredDate = document.getElementById('preferredDate');
+  const preferredTimeButtons = document.getElementById('preferredTimeButtons');
+  const preferredTimeInput = document.getElementById('preferredTime');
+  const timeError = document.getElementById('timeError');
+  const formError = document.getElementById('formError');
+  const formSuccess = document.getElementById('formSuccess');
+
+  // Load available time slots for the chosen date
+  preferredDate.addEventListener('change', async (e) => {
+    const date = e.target.value;
+    preferredTimeButtons.innerHTML = '';
+    preferredTimeInput.value = '';
+    timeError.style.display = 'none';
+    if (!date) return;
+
+    try {
+      const r = await fetch(`${DEPLOY_URL}?date=${encodeURIComponent(date)}`);
+      const times = await r.json();
+      if (!Array.isArray(times) || times.length === 0) {
+        timeError.textContent = "No available times found for this date. Please select another.";
+        timeError.style.display = 'block';
+        return;
+      }
+      times.forEach(t => {
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'time-button';
+        btn.textContent = t;
+        btn.addEventListener('click', () => {
+          document.querySelectorAll('.time-button').forEach(b => b.classList.remove('selected'));
+          btn.classList.add('selected');
+          preferredTimeInput.value = t;
+          timeError.style.display = 'none';
+        });
+        preferredTimeButtons.appendChild(btn);
+      });
+    } catch (err) {
+      console.error(err);
+      timeError.textContent = "Couldn't load time slots. Please try another date.";
+      timeError.style.display = 'block';
+    }
+  });
+
+  // Custom validation: require at least one program and at least one "hear about us"
+  function atLeastOneChecked(container) {
+    return !!container.querySelector('input[type="checkbox"]:checked');
+  }
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    formError.style.display = 'none';
+    programsError.style.display = 'none';
+    hearError.style.display = 'none';
+    timeError.style.display = 'none';
+    formSuccess.style.display = 'none';
+
+    // Built-in required fields
+    if (!form.checkValidity()) {
+      formError.style.display = 'block';
+      return;
+    }
+    // Custom: require at least one program
+    if (!atLeastOneChecked(programsGroup)) {
+      programsError.style.display = 'block';
+      return;
+    }
+    // Custom: require at least one "hear about us"
+    if (!atLeastOneChecked(hearGroup)) {
+      hearError.style.display = 'block';
+      return;
+    }
+    // Custom: require a time selection
+    if (!preferredTimeInput.value) {
+      timeError.style.display = 'block';
+      return;
+    }
+
+    // Build payload to match Apps Script expectations
+    const fd = new FormData(form);
+    const data = {
+      parentFirstName: fd.get('parentFirstName'),
+      parentLastName:  fd.get('parentLastName'),
+      parentEmail:     fd.get('parentEmail'),
+      parentPhone:     fd.get('parentPhone'),
+      studentFirstName:fd.get('studentFirstName'),
+      studentLastName: fd.get('studentLastName'),
+      studentGrade:    fd.get('studentGrade'),
+      programInterest: Array.from(document.querySelectorAll('#programsGroup input[type="checkbox"]:checked')).map(i => i.value),
+      preferredDate:   fd.get('preferredDate'),
+      preferredTime:   fd.get('preferredTime'),
+      hearAboutUs:     Array.from(document.querySelectorAll('#hearGroup input[type="checkbox"]:checked')).map(i => i.value),
+      notes:           fd.get('notes') || '',
+      smsConsent:      false // (not on this design, backend will treat as No)
+    };
+
+    try {
+      const res = await fetch(DEPLOY_URL, {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify(data)
+      });
+      if (!res.ok) throw new Error(`Server error: ${res.status}`);
+      const result = await res.json().catch(() => ({}));
+
+      // Success UI
+      form.reset();
+      preferredTimeButtons.innerHTML = '';
+      formSuccess.style.display = 'block';
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    } catch (err) {
+      console.error(err);
+      formError.textContent = "There was a problem submitting the form. Please try again.";
+      formError.style.display = 'block';
+    }
+  });
+</script>
 </body>
 </html>
