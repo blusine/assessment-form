@@ -1,4 +1,4 @@
-=<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8" />
@@ -10,7 +10,7 @@
     font-family: Arial, sans-serif;
     background-color: #f7f7f7;
     margin: 0;
-    padding: 8px 0;                /* reduced top/bottom */
+    padding: 5px 0;                /* reduced top/bottom */
   }
   .container {
     max-width: 700px;
@@ -25,7 +25,7 @@
   h2.section-title {
     color: #0056A4;                 /* APRISE blue */
     font-size: 18px;
-    margin: 14px 0 8px;
+    margin: 12px 0 6px;
     border-bottom: 2px solid #D71920; /* APRISE red underline */
     padding-bottom: 4px;
   }
@@ -38,7 +38,7 @@
     display: block;
     font-weight: 700;
     color: #2b2b2b;
-    margin: 12px 0 6px;
+    margin: 10px 0 6px;
     font-size: 14px;
   }
   input[type="text"],
@@ -62,7 +62,6 @@
   .row {
     display: flex;
     flex-wrap: wrap;
-    gap: 15px;                      /* your requested gap */
   }
   .row .field { flex: 1; min-width: 0; }
 
@@ -161,7 +160,16 @@
     <label><input type="checkbox" name="newsletter"> Sign up for news and updates</label>
 
     <label for="parentPhone">Phone <span class="required">*</span></label>
-    <input type="tel" id="parentPhone" name="parentPhone" required>
+    <input
+      type="tel"
+      id="parentPhone"
+      name="parentPhone"
+      inputmode="numeric"
+      pattern="\\d{10}"
+      placeholder="10-digit number, e.g., 3125551234"
+      required
+    >
+    <div class="msg error" id="phoneError">Please enter a valid 10-digit phone number (numbers only).</div>
 
     <!-- Student Information -->
     <h2 class="section-title">Student Information <span class="required">*</span></h2>
@@ -196,7 +204,7 @@
 
     <!-- Program(s) of Interest -->
     <h2 class="section-title">Program(s) of Interest</h2>
-    <div class="secondary-label">Select all that apply</div>
+    <!-- <div class="secondary-label">Select all that apply</div> -->
     <div class="checkbox-group" id="programsGroup">
       <label><input type="checkbox" name="programInterest" value="Academic Year Math"> Academic Year Math</label>
       <label><input type="checkbox" name="programInterest" value="Coding (8-16 weeks)"> Coding (8-16 weeks)</label>
@@ -236,6 +244,13 @@
     <label for="notes">Notes or questions for the teacher</label>
     <textarea id="notes" name="notes" rows="3"></textarea>
 
+    <!-- SMS Consent -->
+    <label>
+      <input type="checkbox" id="smsConsent" name="smsConsent" required>
+      I consent to receive text messages about this session using the phone number provided. <span class="required">*</span>
+    </label>
+    <div class="msg error" id="smsError">SMS consent is required so we can send reminders for your assessment.</div>
+
     <!-- Messages + submit -->
     <div class="msg error" id="formError">Please fix the highlighted issues and try again.</div>
     <div class="msg success" id="formSuccess">Thank you! Your free assessment has been scheduled. A confirmation email has been sent.</div>
@@ -257,12 +272,33 @@
   const timeError = document.getElementById('timeError');
   const formError = document.getElementById('formError');
   const formSuccess = document.getElementById('formSuccess');
+  const phone = document.getElementById('parentPhone');
+  const phoneError = document.getElementById('phoneError');
+  const email = document.getElementById('parentEmail');
+  const smsConsent = document.getElementById('smsConsent');
+  const smsError = document.getElementById('smsError');
 
-  function atLeastOneChecked(container) {
-    return !!container.querySelector('input[type="checkbox"]:checked');
+  // Simple email regex
+  function validEmail(value) {
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
   }
 
-  // Fetch available time slots when a date is chosen
+  email.addEventListener('input', () => {
+    if (email.value && !validEmail(email.value)) {
+      email.setCustomValidity('Please enter a valid email address.');
+    } else {
+      email.setCustomValidity('');
+    }
+  });
+
+  phone.addEventListener('input', () => {
+    // strip non-digits and enforce 10 digits
+    const digits = phone.value.replace(/\D/g, '');
+    phoneError.style.display = digits.length === 10 ? 'none' : 'block';
+    phone.setCustomValidity(digits.length === 10 ? '' : 'Invalid phone');
+  });
+
+  // Load available time slots for the chosen date
   preferredDate.addEventListener('change', async (e) => {
     const date = e.target.value;
     preferredTimeButtons.innerHTML = '';
@@ -298,6 +334,10 @@
     }
   });
 
+  function atLeastOneChecked(container) {
+    return !!container.querySelector('input[type="checkbox"]:checked');
+  }
+
   form.addEventListener('submit', async (e) => {
     e.preventDefault();
     formError.style.display = 'none';
@@ -305,8 +345,9 @@
     programsError.style.display = 'none';
     hearError.style.display = 'none';
     timeError.style.display = 'none';
+    smsError.style.display = 'none';
 
-    // HTML required checks
+    // Built-in required checks
     if (!form.checkValidity()) {
       formError.style.display = 'block';
       return;
@@ -324,6 +365,10 @@
       timeError.style.display = 'block';
       return;
     }
+    if (!smsConsent.checked) {
+      smsError.style.display = 'block';
+      return;
+    }
 
     // Build payload for Apps Script
     const fd = new FormData(form);
@@ -331,7 +376,7 @@
       parentFirstName: fd.get('parentFirstName'),
       parentLastName:  fd.get('parentLastName'),
       parentEmail:     fd.get('parentEmail'),
-      parentPhone:     fd.get('parentPhone'),
+      parentPhone:     fd.get('parentPhone').replace(/\D/g, ''), // digits only
       studentFirstName:fd.get('studentFirstName'),
       studentLastName: fd.get('studentLastName'),
       studentGrade:    fd.get('studentGrade'),
@@ -340,7 +385,7 @@
       preferredTime:   fd.get('preferredTime'),
       hearAboutUs:     Array.from(hearGroup.querySelectorAll('input[type="checkbox"]:checked')).map(i => i.value),
       notes:           fd.get('notes') || '',
-      smsConsent:      false  // not in this layout; backend will store "No"
+      smsConsent:      true
     };
 
     try {
