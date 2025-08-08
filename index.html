@@ -8,10 +8,10 @@
 
 <style>
     body {
-        font-family: 'Open Sans', Arial, sans-serif;
+        font-family: 'Open Sans', sans-serif;
         background-color: #fdfdfd;
         margin: 0;
-        padding: 0;
+        padding: 10px;
     }
 
     .container {
@@ -56,10 +56,13 @@
 
     .row {
         display: flex;
-        gap: 15px;
-    }
+        flex-wrap: wrap; /* in case the screen is narrow */
+        gap: 20px; /* space between inputs in the same row */
+}
+
     .row .half {
-        flex: 1;
+        flex: 1; /* equal widths */
+        min-width: 0; /* prevent overflow in flexbox */
     }
 
     .checkbox-group {
@@ -143,9 +146,6 @@
         </div>
     </div>
 
-    <label for="studentEmail">Student Email</label>
-    <input type="email" id="studentEmail" name="studentEmail" placeholder="To be used for class assignment communication">
-
     <label for="currentGrade">Current/Rising Grade or Math Level</label>
     <select id="currentGrade" name="currentGrade" required>
         <option value="">Select an option</option>
@@ -156,12 +156,10 @@
         <option>Grade 4</option>
         <option>Grade 5</option>
         <option>Grade 6</option>
-        <option>Grade 7</option>
-        <option>Grade 8</option>
-        <option>Pre-Algebra</option>
-        <option>Algebra 1</option>
-        <option>Geometry</option>
-        <option>Algebra 2</option>
+        <option>Grade 6-8 Pre-Algebra</option>
+        <option>Algebra I</option>
+        <option>Algebra II</option>
+        <option>Geometry</option>        
         <option>Precalculus</option>
         <option>Calculus</option>
     </select>
@@ -170,20 +168,25 @@
     <h2 class="section-title">Program(s) of Interest</h2>
     <div class="secondary-label">Select all that apply</div>
     <div class="checkbox-group">
-        <label><input type="checkbox" name="programInterest" value="Math"> Math</label>
-        <label><input type="checkbox" name="programInterest" value="Science"> Science</label>
-        <label><input type="checkbox" name="programInterest" value="Coding"> Coding</label>
-        <label><input type="checkbox" name="programInterest" value="Data Science"> Data Science</label>
-        <label><input type="checkbox" name="programInterest" value="Financial Literacy"> Financial Literacy</label>
+        <label><input type="checkbox" name="programInterest" value="Math"> Academic Year Math</label>
+        <label><input type="checkbox" name="programInterest" value="Coding"> Coding (8-16 weeks)</label>
+        <label><input type="checkbox" name="programInterest" value="Crash Courses"> Crash Courses (8-16 weeks)</label>
+        <label><input type="checkbox" name="programInterest" value="Data Science"> Data Science & Optimization (8-16 weeks)</label>
+        <label><input type="checkbox" name="programInterest" value="Financial Literacy"> Financial Literacy Courses (8-16 weeks)</label>
+        <label><input type="checkbox" name="programInterest" value="Individual Tutoring"> Individual Tutoring</label>
+        <label><input type="checkbox" name="programInterest" value="Science"> Science (8-16 weeks)</label>
+        <label><input type="checkbox" name="programInterest" value="Summer Programs"> Summer Programs (4-8 weeks)</label>
+        <label><input type="checkbox" name="programInterest" value="Other"> Other</label>
     </div>
 
     <!-- How Did You Hear About Us -->
     <h2 class="section-title">How Did You Hear About Us? <span class="required">*</span></h2>
     <div class="checkbox-group">
-        <label><input type="checkbox" name="referral" value="Friend or Current Student"> Friend or Current Student</label>
-        <label><input type="checkbox" name="referral" value="Facebook, Instagram, YouTube"> Facebook, Instagram, YouTube</label>
-        <label><input type="checkbox" name="referral" value="Google or Bing Search"> Google or Bing Search</label>
-        <label><input type="checkbox" name="referral" value="School Ads"> School Ads</label>
+        <label><input type="checkbox" name="referral" value="Friend or Current Student"> Recommended by a Friend</label>
+        <label><input type="checkbox" name="referral" value="Facebook, Instagram, YouTube"> Facebook, Instagram, YouTube, or LinkedIn</label>
+        <label><input type="checkbox" name="referral" value="Google or Bing Search"> Search Engine (Google, Bing, or other)</label>
+        <label><input type="checkbox" name="referral" value="Email from Aprise Learning"> Email from Aprise Learning</label>
+        <label><input type="checkbox" name="referral" value="School Ads or Email"> School Ads or Email</label>
         <label><input type="checkbox" name="referral" value="Other"> Other</label>
     </div>
 
